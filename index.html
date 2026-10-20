@@ -46,7 +46,6 @@ input[type=number]{width:86px;text-align:center}
 .summary .warning{color:var(--danger);font-weight:700}
 .settings{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
 .setting{display:flex;align-items:center;gap:8px;font-weight:700}
-.settings-note{margin:12px 0 0}
 details.advanced{border-top:2px solid var(--bd);margin-top:18px;padding-top:14px}
 summary{cursor:pointer;font-weight:800;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px}
 summary::-webkit-details-marker{display:none}
@@ -74,9 +73,8 @@ button.primary{background:#15110e;color:#fff;border:2px solid #15110e;border-rad
 button.primary:hover{background:var(--ac-dark)}
 button.secondary{background:var(--card);color:var(--tx);border:2px solid var(--bd);border-radius:2px;padding:9px 14px;font-weight:800}
 button.secondary:hover{background:var(--soft)}
-.action{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#ffb43f;border:2px solid var(--bd);border-radius:2px;padding:17px 20px;margin:0 0 18px;box-shadow:5px 5px 0 #15110e}
-.action h2{font-size:18px}
-.action .primary{font-size:18px;min-width:180px}
+.action{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;background:#ffb43f;border:2px solid var(--bd);border-radius:2px;padding:17px 20px;margin:0 0 18px;box-shadow:5px 5px 0 #15110e}
+.action .primary{font-size:18px;min-width:220px}
 .msg{color:var(--danger);font-size:14px;font-weight:700;margin-top:8px}
 .msg:empty{display:none}
 .results:empty{display:none}
@@ -115,7 +113,6 @@ button.secondary:hover{background:var(--soft)}
 <section class="section" aria-labelledby="settings-title">
   <div class="section-head"><div><div class="step">Step 02 · 設定</div><h2 id="settings-title">每隊人數</h2></div></div>
   <div class="settings"><label class="setting" for="pm">男生 <input id="pm" type="number" min="0" max="6" step="1" value="3" inputmode="numeric"></label><label class="setting" for="pw">女生 <input id="pw" type="number" min="0" max="6" step="1" value="3" inputmode="numeric"></label></div>
-  <p class="muted settings-note">每隊 6 人；調整一欄時，另一欄會自動補足。人數需剛好分完，至少兩隊。</p>
   <details class="advanced" id="pairDetails"><summary>綁定同隊 <span class="muted" id="pairCount">0 組</span></summary>
     <p class="muted">需要固定同隊的人，可在這裡綁定。</p>
     <div class="pair-controls"><select id="a" aria-label="第一位隊員"></select><span>＋</span><select id="b" aria-label="第二位隊員"></select><button class="rule-action" id="add">綁定</button></div>
@@ -129,7 +126,7 @@ button.secondary:hover{background:var(--soft)}
   </details>
 </section>
 
-<section class="action" aria-label="開始分隊"><div><div class="step">Step 03 · 開打</div><h2 id="ready">確認人數後開始分隊</h2><div class="muted" id="info"></div><div class="msg" id="err" role="alert"></div></div><button class="primary" id="go">開始分隊 →</button></section>
+<section class="action" aria-label="開始分隊"><button class="primary" id="go">開始分隊 →</button><div class="msg" id="err" role="alert"></div></section>
 
 <div id="out" class="results" aria-live="polite"></div>
 <details class="manage"><summary>管理分隊紀錄</summary><button class="secondary" id="clear">清除所有分隊紀錄</button></details>
@@ -257,7 +254,7 @@ $("go").onclick=function(){
 $("clear").onclick=function(){if(S.rounds.length&&confirm("確定清除所有分隊紀錄？")){S.rounds=[];save();draw()}};
 
 function updateRoster(){
-  var M=list($("men").value),W=list($("women").value),pm=+$("pm").value,pw=+$("pw").value;
+  var M=list($("men").value),W=list($("women").value);
   var overlap=M.filter(function(x){return W.indexOf(x)>=0});
   var duplicates=function(raw){var names=raw.split("\n").map(function(x){return x.trim()}).filter(Boolean);return names.length-list(raw).length};
   var repeated=duplicates($("men").value)+duplicates($("women").value);
@@ -267,9 +264,6 @@ function updateRoster(){
   if(overlap.length)note.push('<span class="warning">⚠ 男女名單有 '+overlap.length+' 個同名，請區分</span>');
   if(repeated)note.push('<span class="warning">⚠ 重複輸入 '+repeated+' 筆，統計未重複計入</span>');
   $("rosterSummary").innerHTML=note.join("");
-  var total=M.length+W.length,teamCount=total/6;
-  var ready=Number.isInteger(pm)&&Number.isInteger(pw)&&pm>=0&&pw>=0&&pm<=6&&pw<=6&&pm+pw===6&&!overlap.length&&Number.isInteger(teamCount)&&teamCount>=2&&M.length===teamCount*pm&&W.length===teamCount*pw;
-  $("ready").textContent=ready?"可分成 "+teamCount+" 隊，每隊 "+pm+" 男 "+pw+" 女":"確認人數後開始分隊";
 }
 function roundHTML(rd,r,latest,Mset,bound){
   var html='<section class="section"'+(latest?' id="latest"':'')+'><div class="result-head"><div><div class="step">'+(latest?'最新結果':'分隊紀錄')+'</div><h2>第 '+(r+1)+' 輪 · '+rd.length+' 隊</h2></div>';
@@ -284,7 +278,6 @@ function roundHTML(rd,r,latest,Mset,bound){
   return html+'</section>';
 }
 function draw(){
-  $("info").textContent=S.rounds.length?"已分 "+S.rounds.length+" 輪；系統會盡量避免重複同隊":"歷史紀錄會自動保存在這台裝置";
   var bound={};S.pairs.forEach(function(p){bound[p[0]]=bound[p[1]]=1});
   var Mset=list($("men").value);
   var html="",last=S.rounds.length-1;
