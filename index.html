@@ -46,13 +46,19 @@ details[open]>summary::after{content:"−"}
 .pair-controls{display:grid;grid-template-columns:1fr auto 1fr auto;align-items:center;gap:8px;margin-top:14px}
 .exclude-builder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
 .exclude-builder label{display:grid;gap:5px;font-size:13px;font-weight:800}
+.exclude-member-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:6px}
 .exclude-actions{grid-column:1/-1}
 .exclude-group{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:9px;padding:11px 12px;border:1px solid var(--bd);background:#fff1e7}
 .exclude-group strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
-.exclude-names{display:block;font-size:16px;font-weight:800;margin-top:3px}
+.exclude-names{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:16px;font-weight:800;margin-top:3px}
 .exclude-names b{color:var(--ac-dark);padding:0 3px}
 .exclude-group .warning{display:block;color:var(--danger);font-size:13px;font-weight:700}
 .remove-group{border:0;background:transparent;color:var(--danger);font-size:24px;line-height:1;cursor:pointer}
+.remove-member{border:1px solid var(--bd);background:var(--card);color:var(--danger);padding:8px 9px;font-size:13px;font-weight:800;white-space:nowrap}
+.exclude-names .remove-member{padding:0 5px;font-size:15px}
+.remove-member:disabled{opacity:.4;cursor:not-allowed}
+.rule-action{background:#15110e!important;color:#fff!important;border:2px solid #15110e!important;border-radius:2px!important;font-weight:900!important}
+.rule-action:hover{background:var(--ac-dark)!important;color:#fff!important}
 .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--bd);border-radius:99px;padding:3px 5px 3px 12px;margin:9px 7px 0 0;font-size:14px;background:var(--soft)}
 .pill button{border:0;background:none;color:var(--mu);padding:0 7px;font-size:20px;line-height:1.3}
 button.primary{background:#15110e;color:#fff;border:2px solid #15110e;border-radius:2px;padding:12px 18px;font-weight:900;box-shadow:4px 4px 0 #f04e24}
@@ -103,13 +109,13 @@ button.secondary:hover{background:var(--soft)}
   <p class="muted settings-note">人數需剛好分完，至少兩隊。</p>
   <details class="advanced" id="pairDetails"><summary>綁定同隊 <span class="muted" id="pairCount">0 組</span></summary>
     <p class="muted">需要固定同隊的人，可在這裡綁定。</p>
-    <div class="pair-controls"><select id="a" aria-label="第一位隊員"></select><span>＋</span><select id="b" aria-label="第二位隊員"></select><button class="secondary" id="add">綁定</button></div>
+    <div class="pair-controls"><select id="a" aria-label="第一位隊員"></select><span>＋</span><select id="b" aria-label="第二位隊員"></select><button class="rule-action" id="add">綁定</button></div>
     <div id="pairs"></div><div class="msg" id="pmsg" role="alert"></div>
   </details>
   <details class="advanced" id="excludeDetails"><summary>不可同隊者組合 <span class="muted" id="excludeCount">0 組</span></summary>
-    <p class="muted">每組至少 3 人，組內所有人會分到不同隊。不同組分開計算，組與組可重疊人員。</p>
+    <p class="muted">同時選定者必不會同隊</p>
     <div id="excludeBuilder"></div>
-    <button class="secondary" id="addExclude" type="button">＋ 新增不可同隊組合</button>
+    <button class="rule-action" id="addExclude" type="button">＋ 新增不可同隊組合</button>
     <div id="excludeGroups"></div><div class="msg" id="xmsg" role="alert"></div>
   </details>
 </section>
@@ -137,7 +143,7 @@ var excludeDraft=["","",""];
 function renderExcludeBuilder(){
   var all=list($("men").value).concat(list($("women").value));
   var html='<div class="exclude-builder">';
-  excludeDraft.forEach(function(n,i){if(n&&all.indexOf(n)<0){n="";excludeDraft[i]=""}html+='<label>成員 '+(i+1)+'<select data-xi="'+i+'" aria-label="不可同隊組合成員 '+(i+1)+'"><option value="">選擇名單成員</option>'+all.map(function(x){return'<option value="'+esc(x)+'"'+(x===n?' selected':'')+'>'+esc(x)+'</option>'}).join("")+'</select></label>'});
+  excludeDraft.forEach(function(n,i){if(n&&all.indexOf(n)<0){n="";excludeDraft[i]=""}html+='<div class="exclude-member-row"><label>成員 '+(i+1)+'<select data-xi="'+i+'" aria-label="不可同隊組合成員 '+(i+1)+'"><option value="">選擇名單成員</option>'+all.map(function(x){return'<option value="'+esc(x)+'"'+(x===n?' selected':'')+'>'+esc(x)+'</option>'}).join("")+'</select></label><button class="remove-member" data-xremove="'+i+'" type="button" aria-label="刪除成員 '+(i+1)+'"'+(excludeDraft.length<=3?' disabled':'')+'>刪除</button></div>'});
   html+='<div class="exclude-actions"><button class="secondary" id="moreExclude" type="button">＋ 加一位</button></div></div>';
   $("excludeBuilder").innerHTML=html;
 }
@@ -146,15 +152,16 @@ function drawExclusions(){
   $("excludeCount").textContent=S.noTeamGroups.length+" 組";
   $("excludeGroups").innerHTML=S.noTeamGroups.map(function(g,i){
     var missing=g.filter(function(n){return all.indexOf(n)<0});
-    return'<div class="exclude-group"><div><strong>組合 '+(i+1)+'</strong><span class="exclude-names">'+g.map(esc).join(' <b>≠</b> ')+'</span>'+(missing.length?'<span class="warning">名單已移除：'+missing.map(esc).join('、')+'</span>':'')+'</div><button class="remove-group" data-xgroup="'+i+'" aria-label="移除不可同隊組合 '+(i+1)+'">×</button></div>';
+    return'<div class="exclude-group"><div><strong>組合 '+(i+1)+'</strong><span class="exclude-names">'+g.map(function(n,j){return(j?' <b>≠</b> ':'')+'<span>'+esc(n)+' <button class="remove-member" data-xgroup="'+i+'" data-xmember="'+j+'" type="button" aria-label="從組合 '+(i+1)+' 刪除 '+esc(n)+'"'+(g.length<=3?' disabled':'')+'>×</button></span>'}).join("")+'</span>'+(missing.length?'<span class="warning">名單已移除：'+missing.map(esc).join('、')+'</span>':'')+'</div><button class="remove-group" data-xgroup="'+i+'" aria-label="移除不可同隊組合 '+(i+1)+'" type="button">×</button></div>';
   }).join("")||'<div class="muted" style="margin-top:12px">尚未設定不可同隊組合</div>';
 }
 $("excludeBuilder").onchange=function(e){var i=e.target.getAttribute("data-xi");if(i!==null)excludeDraft[+i]=e.target.value};
-$("excludeBuilder").onclick=function(e){if(e.target.id==="moreExclude"){excludeDraft.push("");renderExcludeBuilder()}};
-$("excludeGroups").onclick=function(e){var i=e.target.getAttribute("data-xgroup");if(i!==null){S.noTeamGroups.splice(+i,1);drawExclusions();save()}};
+$("excludeBuilder").onclick=function(e){if(e.target.id==="moreExclude"){excludeDraft.push("");renderExcludeBuilder();return}var i=e.target.getAttribute("data-xremove");if(i!==null&&excludeDraft.length>3){excludeDraft.splice(+i,1);renderExcludeBuilder()}};
+$("excludeGroups").onclick=function(e){var i=e.target.getAttribute("data-xgroup"),j=e.target.getAttribute("data-xmember");if(i===null)return;if(j!==null){if(S.noTeamGroups[+i]&&S.noTeamGroups[+i].length>3){S.noTeamGroups[+i].splice(+j,1);drawExclusions();save()}return}S.noTeamGroups.splice(+i,1);drawExclusions();save()};
 $("addExclude").onclick=function(){
   var picked=excludeDraft.filter(Boolean),m=$("xmsg");m.textContent="";
   if(picked.length<3){m.textContent="每組至少要選 3 位不同成員。";return}
+  if(picked.length!==excludeDraft.length){m.textContent="請選好每個成員，或刪除多餘的成員欄位。";return}
   if(new Set(picked).size!==picked.length){m.textContent="同一組中不能重複選同一位成員。";return}
   S.noTeamGroups.push(picked);excludeDraft=["","",""];renderExcludeBuilder();drawExclusions();save();
 };
