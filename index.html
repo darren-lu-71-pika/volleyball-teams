@@ -41,6 +41,7 @@ textarea::placeholder{color:var(--mu)}
 select{min-width:0;width:100%}
 input[type=number]{width:86px;text-align:center}
 .summary{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:15px;padding:12px 14px;border-radius:12px;background:var(--soft);color:var(--tx);font-size:14px}
+.summary:empty{display:none}
 .summary strong{font-size:16px}
 .summary .warning{color:var(--danger);font-weight:700}
 .settings{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
@@ -262,10 +263,10 @@ function updateRoster(){
   var repeated=duplicates($("men").value)+duplicates($("women").value);
   $("menCount").textContent=M.length+" 人";$("womenCount").textContent=W.length+" 人";
   $("totalCount").textContent="共 "+(M.length+W.length)+" 人";
-  var note="男 "+M.length+" 人 · 女 "+W.length+" 人";
-  if(overlap.length)note+=' <span class="warning">⚠ 男女名單有 '+overlap.length+' 個同名，請區分</span>';
-  if(repeated)note+=' <span class="warning">⚠ 重複輸入 '+repeated+' 筆，統計未重複計入</span>';
-  $("rosterSummary").innerHTML="<strong>名單核對</strong>"+note;
+  var note=[];
+  if(overlap.length)note.push('<span class="warning">⚠ 男女名單有 '+overlap.length+' 個同名，請區分</span>');
+  if(repeated)note.push('<span class="warning">⚠ 重複輸入 '+repeated+' 筆，統計未重複計入</span>');
+  $("rosterSummary").innerHTML=note.join("");
   var total=M.length+W.length,teamCount=total/6;
   var ready=Number.isInteger(pm)&&Number.isInteger(pw)&&pm>=0&&pw>=0&&pm<=6&&pw<=6&&pm+pw===6&&!overlap.length&&Number.isInteger(teamCount)&&teamCount>=2&&M.length===teamCount*pm&&W.length===teamCount*pw;
   $("ready").textContent=ready?"可分成 "+teamCount+" 隊，每隊 "+pm+" 男 "+pw+" 女":"確認人數後開始分隊";
