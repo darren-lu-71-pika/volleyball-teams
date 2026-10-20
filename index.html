@@ -14,11 +14,8 @@ button{cursor:pointer}
 button:focus-visible,textarea:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #eeb74c;outline-offset:2px}
 .shell{max-width:1040px;margin:0 auto;padding:16px 16px max(40px,env(safe-area-inset-bottom))}
 .hero{position:relative;overflow:hidden;background:linear-gradient(172deg,transparent 68%,#ff8d72 68.5% 74%,#ffb43f 74.5% 80%,transparent 80.5%),linear-gradient(115deg,#f04e24,#ff642f);border:3px solid #15110e;border-radius:3px;color:#15110e;padding:18px 26px 27px;margin-bottom:18px;box-shadow:8px 8px 0 #15110e}
-.ticker{display:flex;justify-content:space-between;gap:10px;overflow:hidden;white-space:nowrap;font-size:10px;line-height:1.2;letter-spacing:.08em;font-weight:900;text-transform:uppercase;margin-bottom:22px}
-.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:950;text-transform:uppercase;color:#15110e;margin:0 0 3px}
-h1{font-size:clamp(38px,8vw,78px);line-height:.98;margin:0 0 12px;letter-spacing:-.035em;font-weight:1000;text-shadow:2px 2px 0 #ffb43f}
-.hero p{margin:0;color:#25130e;font-weight:750;font-size:18px}
-.credits{display:flex;gap:0;flex-wrap:wrap;width:max-content;max-width:100%;margin-top:19px;background:#15110e;color:#fff;padding:9px 13px;font-size:13px;font-weight:850;letter-spacing:.04em}
+.hero h1{font-size:clamp(38px,8vw,78px);line-height:.98;margin:0;letter-spacing:-.035em;font-weight:1000;text-shadow:2px 2px 0 #ffb43f}
+.credits{display:flex;gap:0;flex-wrap:wrap;width:max-content;max-width:100%;margin-top:14px;background:#15110e;color:#fff;padding:9px 13px;font-size:13px;font-weight:850;letter-spacing:.04em}
 .credits span+span:before{content:" / ";color:#ff754d;padding:0 8px}
 .section{background:var(--card);border:2px solid var(--bd);border-radius:3px;padding:20px;margin-bottom:16px;box-shadow:5px 5px 0 #15110e12}
 .section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
@@ -80,17 +77,14 @@ button.secondary:hover{background:var(--soft)}
 .vs{margin-top:15px;padding:11px 13px;border-radius:10px;background:var(--soft);font-size:14px}
 .history{margin-bottom:14px}.history>summary{font-size:17px}.history .section{margin:14px 0 0;box-shadow:none}
 .manage{color:var(--mu);margin:18px 0}.manage>summary{font-size:14px;font-weight:600}.manage button{color:var(--danger);margin-top:12px}
-@media(max-width:620px){.shell{padding:10px 10px max(30px,env(safe-area-inset-bottom))}.hero{padding:15px 16px 23px;box-shadow:5px 5px 0 #15110e}.ticker{margin-bottom:18px}.section{padding:16px}.roster-grid{grid-template-columns:1fr}.pair-controls{grid-template-columns:1fr auto 1fr}.pair-controls button{grid-column:1/-1}.exclude-builder{grid-template-columns:1fr}.exclude-actions{grid-column:auto}.action{align-items:stretch}.action .primary{width:100%}.teams{grid-template-columns:1fr}.credits{font-size:12px}}
+@media(max-width:620px){.shell{padding:10px 10px max(30px,env(safe-area-inset-bottom))}.hero{padding:18px 16px 23px;box-shadow:5px 5px 0 #15110e}.section{padding:16px}.roster-grid{grid-template-columns:1fr}.pair-controls{grid-template-columns:1fr auto 1fr}.pair-controls button{grid-column:1/-1}.exclude-builder{grid-template-columns:1fr}.exclude-actions{grid-column:auto}.action{align-items:stretch}.action .primary{width:100%}.teams{grid-template-columns:1fr}.credits{font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <main class="shell">
 <header class="hero">
-  <div class="ticker"><span>FUTURE SOON → THE TAIPEI CURRENT</span><span>VOLLEYBALL CLUB → COURT SIDE</span><span>FUTURE SOON → THE TAIPEI CURRENT</span></div>
-  <div class="eyebrow">台北大洋流 × Court Side</div>
   <h1>排球自動分隊</h1>
-  <p>確認名單，設定每隊人數，按一下就開打。</p>
   <div class="credits"><span>design by 中哥</span><span>power by conquerors71</span></div>
 </header>
 
