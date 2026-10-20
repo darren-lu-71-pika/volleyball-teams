@@ -3,34 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>排球自動分隊｜中哥</title>
+<title>排球自動分隊｜台北大洋流</title>
 <style>
-:root{--bg:#f3f5f1;--card:#fff;--tx:#183129;--mu:#52665d;--bd:#d9e2da;--ac:#147d5d;--ac-dark:#0b6045;--m:#e0f1ff;--mt:#12486d;--w:#ffe8ed;--wt:#922e4d;--soft:#e8f3ec;--danger:#b72f35}
-@media(prefers-color-scheme:dark){:root{--bg:#101d19;--card:#1a2b24;--tx:#f0f7f1;--mu:#b3c5b9;--bd:#365146;--ac:#65d8a4;--ac-dark:#91edc0;--m:#193d50;--mt:#c3e7ff;--w:#4b2939;--wt:#ffd4e2;--soft:#233b2f;--danger:#ff9a9d}}
+:root{--bg:#fff0e2;--card:#fffaf3;--tx:#15110e;--mu:#645850;--bd:#17120f;--ac:#f04e24;--ac-dark:#c83216;--m:#dceeff;--mt:#123a60;--w:#ffe0e7;--wt:#8d1c37;--soft:#ffe1cf;--danger:#a61d1d}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;background-image:repeating-linear-gradient(135deg,transparent 0 30px,#f04e2408 30px 32px)}
 button,textarea,select,input{font:inherit}
 button{cursor:pointer}
 button:focus-visible,textarea:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #eeb74c;outline-offset:2px}
-.shell{max-width:1020px;margin:0 auto;padding:16px 16px max(40px,env(safe-area-inset-bottom))}
-.hero{background:linear-gradient(125deg,#124c3c,#0b7053);border-radius:22px;color:#fff;padding:25px 28px;margin-bottom:18px;box-shadow:0 12px 30px #0c503523}
-.eyebrow{font-size:12px;letter-spacing:.14em;font-weight:800;text-transform:uppercase;color:#a8ead2;margin:0 0 7px}
-h1{font-size:clamp(26px,4vw,36px);line-height:1.2;margin:0 0 6px;letter-spacing:.02em}
-.hero p{margin:0;color:#d3f2e5}
-.credits{display:flex;gap:6px 18px;flex-wrap:wrap;margin-top:17px;padding-top:14px;border-top:1px solid #ffffff47;font-size:14px;font-weight:700;letter-spacing:.03em;color:#fff}
-.section{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 4px 16px #17362709}
+.shell{max-width:1040px;margin:0 auto;padding:16px 16px max(40px,env(safe-area-inset-bottom))}
+.hero{position:relative;overflow:hidden;background:linear-gradient(172deg,transparent 68%,#ff8d72 68.5% 74%,#ffb43f 74.5% 80%,transparent 80.5%),linear-gradient(115deg,#f04e24,#ff642f);border:3px solid #15110e;border-radius:3px;color:#15110e;padding:18px 26px 27px;margin-bottom:18px;box-shadow:8px 8px 0 #15110e}
+.ticker{display:flex;justify-content:space-between;gap:10px;overflow:hidden;white-space:nowrap;font-size:10px;line-height:1.2;letter-spacing:.08em;font-weight:900;text-transform:uppercase;margin-bottom:22px}
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:950;text-transform:uppercase;color:#15110e;margin:0 0 3px}
+h1{font-size:clamp(38px,8vw,78px);line-height:.98;margin:0 0 12px;letter-spacing:-.035em;font-weight:1000;text-shadow:2px 2px 0 #ffb43f}
+.hero p{margin:0;color:#25130e;font-weight:750;font-size:18px}
+.credits{display:flex;gap:0;flex-wrap:wrap;width:max-content;max-width:100%;margin-top:19px;background:#15110e;color:#fff;padding:9px 13px;font-size:13px;font-weight:850;letter-spacing:.04em}
+.credits span+span:before{content:" / ";color:#ff754d;padding:0 8px}
+.section{background:var(--card);border:2px solid var(--bd);border-radius:3px;padding:20px;margin-bottom:16px;box-shadow:5px 5px 0 #15110e12}
 .section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
-.step{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--ac-dark);font-weight:800;margin-bottom:2px}
-h2{font-size:21px;line-height:1.3;margin:0}
+.step{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--ac-dark);font-weight:950;margin-bottom:4px}
+h2{font-size:23px;line-height:1.2;margin:0;font-weight:950}
 h3{font-size:17px;margin:0}
 .muted{color:var(--mu);font-size:14px}
-.count-total{background:var(--soft);color:var(--ac-dark);padding:5px 12px;border-radius:999px;font-weight:800;white-space:nowrap}
+.count-total{background:#15110e;color:#fff;padding:6px 12px;border-radius:0;font-weight:900;white-space:nowrap}
 .roster-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .field-label{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:750}
 .field-label strong{color:var(--ac-dark)}
-textarea,select,input{color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
-textarea{display:block;width:100%;min-height:190px;resize:vertical;line-height:1.6;background:var(--bg)}
+textarea,select,input{color:var(--tx);background:var(--card);border:2px solid var(--bd);border-radius:2px;padding:10px 12px}
+textarea{display:block;width:100%;min-height:190px;resize:vertical;line-height:1.6;background:#fff5ea}
 textarea::placeholder{color:var(--mu)}
 select{min-width:0;width:100%}
 input[type=number]{width:86px;text-align:center}
@@ -40,20 +41,28 @@ input[type=number]{width:86px;text-align:center}
 .settings{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
 .setting{display:flex;align-items:center;gap:8px;font-weight:700}
 .settings-note{margin:12px 0 0}
-details.advanced{border-top:1px solid var(--bd);margin-top:18px;padding-top:14px}
+details.advanced{border-top:2px solid var(--bd);margin-top:18px;padding-top:14px}
 summary{cursor:pointer;font-weight:800;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px}
 summary::-webkit-details-marker{display:none}
 summary::after{content:"＋";font-size:22px;line-height:1;color:var(--ac-dark)}
 details[open]>summary::after{content:"−"}
 .pair-controls{display:grid;grid-template-columns:1fr auto 1fr auto;align-items:center;gap:8px;margin-top:14px}
+.exclude-builder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.exclude-builder label{display:grid;gap:5px;font-size:13px;font-weight:800}
+.exclude-actions{grid-column:1/-1}
+.exclude-group{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:9px;padding:11px 12px;border:1px solid var(--bd);background:#fff1e7}
+.exclude-group strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.exclude-names{display:block;font-size:16px;font-weight:800;margin-top:3px}
+.exclude-names b{color:var(--ac-dark);padding:0 3px}
+.exclude-group .warning{display:block;color:var(--danger);font-size:13px;font-weight:700}
+.remove-group{border:0;background:transparent;color:var(--danger);font-size:24px;line-height:1;cursor:pointer}
 .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--bd);border-radius:99px;padding:3px 5px 3px 12px;margin:9px 7px 0 0;font-size:14px;background:var(--soft)}
 .pill button{border:0;background:none;color:var(--mu);padding:0 7px;font-size:20px;line-height:1.3}
-button.primary{background:var(--ac);color:#fff;border:0;border-radius:11px;padding:12px 18px;font-weight:800}
+button.primary{background:#15110e;color:#fff;border:2px solid #15110e;border-radius:2px;padding:12px 18px;font-weight:900;box-shadow:4px 4px 0 #f04e24}
 button.primary:hover{background:var(--ac-dark)}
-@media(prefers-color-scheme:dark){button.primary{color:#0d2820}}
-button.secondary{background:var(--card);color:var(--ac-dark);border:1px solid var(--bd);border-radius:10px;padding:9px 14px;font-weight:700}
+button.secondary{background:var(--card);color:var(--tx);border:2px solid var(--bd);border-radius:2px;padding:9px 14px;font-weight:800}
 button.secondary:hover{background:var(--soft)}
-.action{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--soft);border:1px solid var(--bd);border-radius:18px;padding:17px 20px;margin-bottom:14px}
+.action{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#ffb43f;border:2px solid var(--bd);border-radius:2px;padding:17px 20px;margin:0 0 18px;box-shadow:5px 5px 0 #15110e}
 .action h2{font-size:18px}
 .action .primary{font-size:18px;min-width:180px}
 .msg{color:var(--danger);font-size:14px;font-weight:700;margin-top:8px}
@@ -62,7 +71,7 @@ button.secondary:hover{background:var(--soft)}
 .result-head{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:15px}
 .result-head p{margin:4px 0 0}
 .teams{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(205px,1fr))}
-.team{border:1px solid var(--bd);border-radius:15px;padding:14px;background:var(--bg)}
+.team{border:2px solid var(--bd);border-radius:2px;padding:14px;background:var(--bg)}
 .team:nth-child(6n+1){border-top:5px solid #d95457}.team:nth-child(6n+2){border-top:5px solid #4386d8}.team:nth-child(6n+3){border-top:5px solid #3da871}.team:nth-child(6n+4){border-top:5px solid #dbaf38}.team:nth-child(6n+5){border-top:5px solid #9665b5}.team:nth-child(6n+6){border-top:5px solid #e38b45}
 .team h3{margin-bottom:9px}
 .members{display:flex;flex-wrap:wrap;gap:6px}
@@ -71,15 +80,16 @@ button.secondary:hover{background:var(--soft)}
 .vs{margin-top:15px;padding:11px 13px;border-radius:10px;background:var(--soft);font-size:14px}
 .history{margin-bottom:14px}.history>summary{font-size:17px}.history .section{margin:14px 0 0;box-shadow:none}
 .manage{color:var(--mu);margin:18px 0}.manage>summary{font-size:14px;font-weight:600}.manage button{color:var(--danger);margin-top:12px}
-@media(max-width:620px){.shell{padding:10px 10px max(30px,env(safe-area-inset-bottom))}.hero{padding:22px 19px;border-radius:16px}.section{padding:16px;border-radius:14px}.roster-grid{grid-template-columns:1fr}.pair-controls{grid-template-columns:1fr auto 1fr}.pair-controls button{grid-column:1/-1}.action{align-items:stretch}.action .primary{width:100%}.teams{grid-template-columns:1fr}.credits{gap:3px 12px}}
+@media(max-width:620px){.shell{padding:10px 10px max(30px,env(safe-area-inset-bottom))}.hero{padding:15px 16px 23px;box-shadow:5px 5px 0 #15110e}.ticker{margin-bottom:18px}.section{padding:16px}.roster-grid{grid-template-columns:1fr}.pair-controls{grid-template-columns:1fr auto 1fr}.pair-controls button{grid-column:1/-1}.exclude-builder{grid-template-columns:1fr}.exclude-actions{grid-column:auto}.action{align-items:stretch}.action .primary{width:100%}.teams{grid-template-columns:1fr}.credits{font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <main class="shell">
 <header class="hero">
-  <div class="eyebrow">Volleyball Team Maker</div>
-  <h1>🏐 排球自動分隊</h1>
+  <div class="ticker"><span>FUTURE SOON → THE TAIPEI CURRENT</span><span>VOLLEYBALL CLUB → COURT SIDE</span><span>FUTURE SOON → THE TAIPEI CURRENT</span></div>
+  <div class="eyebrow">台北大洋流 × Court Side</div>
+  <h1>排球自動分隊</h1>
   <p>確認名單，設定每隊人數，按一下就開打。</p>
   <div class="credits"><span>design by 中哥</span><span>power by conquerors71</span></div>
 </header>
@@ -102,6 +112,12 @@ button.secondary:hover{background:var(--soft)}
     <div class="pair-controls"><select id="a" aria-label="第一位隊員"></select><span>＋</span><select id="b" aria-label="第二位隊員"></select><button class="secondary" id="add">綁定</button></div>
     <div id="pairs"></div><div class="msg" id="pmsg" role="alert"></div>
   </details>
+  <details class="advanced" id="excludeDetails"><summary>不可同隊者組合 <span class="muted" id="excludeCount">0 組</span></summary>
+    <p class="muted">每組至少 3 人，組內所有人會分到不同隊。不同組分開計算，組與組可重疊人員。</p>
+    <div id="excludeBuilder"></div>
+    <button class="secondary" id="addExclude" type="button">＋ 新增不可同隊組合</button>
+    <div id="excludeGroups"></div><div class="msg" id="xmsg" role="alert"></div>
+  </details>
 </section>
 
 <section class="action" aria-label="開始分隊"><div><div class="step">Step 03 · 開打</div><h2 id="ready">確認人數後開始分隊</h2><div class="muted" id="info"></div><div class="msg" id="err" role="alert"></div></div><button class="primary" id="go">開始分隊 →</button></section>
@@ -113,14 +129,41 @@ button.secondary:hover{background:var(--soft)}
 <script>
 var KEY="vb-teams-v1",NAMES=["紅隊","藍隊","綠隊","黃隊","紫隊","橘隊"];
 var $=function(i){return document.getElementById(i)};
-var S={men:"",women:"",pm:3,pw:3,pairs:[],rounds:[]},hadSaved=false;
+var S={men:"",women:"",pm:3,pw:3,pairs:[],noTeamGroups:[],rounds:[]},hadSaved=false;
 try{var r=localStorage.getItem(KEY);if(r){S=Object.assign(S,JSON.parse(r));hadSaved=true}}catch(e){}
+if(!Array.isArray(S.noTeamGroups))S.noTeamGroups=[];
 if(!hadSaved){S.men=[1,2,3,4,5,6,7,8,9].map(function(i){return"男"+i}).join("\n");S.women=[1,2,3,4,5,6,7,8,9].map(function(i){return"女"+i}).join("\n")}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function list(t){var seen={};return t.split("\n").map(function(s){return s.trim()}).filter(function(s){if(!s||seen[s])return false;seen[s]=1;return true})}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
 function gender(n){return list($("men").value).indexOf(n)>=0?"m":"w"}
+var excludeDraft=["","",""];
+
+function renderExcludeBuilder(){
+  var all=list($("men").value).concat(list($("women").value));
+  var html='<div class="exclude-builder">';
+  excludeDraft.forEach(function(n,i){if(n&&all.indexOf(n)<0){n="";excludeDraft[i]=""}html+='<label>成員 '+(i+1)+'<select data-xi="'+i+'" aria-label="不可同隊組合成員 '+(i+1)+'"><option value="">選擇名單成員</option>'+all.map(function(x){return'<option value="'+esc(x)+'"'+(x===n?' selected':'')+'>'+esc(x)+'</option>'}).join("")+'</select></label>'});
+  html+='<div class="exclude-actions"><button class="secondary" id="moreExclude" type="button">＋ 加一位</button></div></div>';
+  $("excludeBuilder").innerHTML=html;
+}
+function drawExclusions(){
+  var all=list($("men").value).concat(list($("women").value));
+  $("excludeCount").textContent=S.noTeamGroups.length+" 組";
+  $("excludeGroups").innerHTML=S.noTeamGroups.map(function(g,i){
+    var missing=g.filter(function(n){return all.indexOf(n)<0});
+    return'<div class="exclude-group"><div><strong>組合 '+(i+1)+'</strong><span class="exclude-names">'+g.map(esc).join(' <b>≠</b> ')+'</span>'+(missing.length?'<span class="warning">名單已移除：'+missing.map(esc).join('、')+'</span>':'')+'</div><button class="remove-group" data-xgroup="'+i+'" aria-label="移除不可同隊組合 '+(i+1)+'">×</button></div>';
+  }).join("")||'<div class="muted" style="margin-top:12px">尚未設定不可同隊組合</div>';
+}
+$("excludeBuilder").onchange=function(e){var i=e.target.getAttribute("data-xi");if(i!==null)excludeDraft[+i]=e.target.value};
+$("excludeBuilder").onclick=function(e){if(e.target.id==="moreExclude"){excludeDraft.push("");renderExcludeBuilder()}};
+$("excludeGroups").onclick=function(e){var i=e.target.getAttribute("data-xgroup");if(i!==null){S.noTeamGroups.splice(+i,1);drawExclusions();save()}};
+$("addExclude").onclick=function(){
+  var picked=excludeDraft.filter(Boolean),m=$("xmsg");m.textContent="";
+  if(picked.length<3){m.textContent="每組至少要選 3 位不同成員。";return}
+  if(new Set(picked).size!==picked.length){m.textContent="同一組中不能重複選同一位成員。";return}
+  S.noTeamGroups.push(picked);excludeDraft=["","",""];renderExcludeBuilder();drawExclusions();save();
+};
 
 function fillSel(){
   var all=list($("men").value).concat(list($("women").value));
@@ -130,7 +173,7 @@ function fillSel(){
     if(all.indexOf(v)>=0)el.value=v;else if(k==1&&all.length>1)el.value=all[1];
   });
   S.pairs=S.pairs.filter(function(p){return all.indexOf(p[0])>=0&&all.indexOf(p[1])>=0});
-  drawPairs();
+  drawPairs();renderExcludeBuilder();drawExclusions();
 }
 function drawPairs(){
   $("pairs").innerHTML=S.pairs.map(function(p,i){return'<span class="pill">'+esc(p[0])+" ＋ "+esc(p[1])+'<button data-i="'+i+'" aria-label="移除 '+esc(p[0])+' 與 '+esc(p[1])+' 的綁定">×</button></span>'}).join("")||'<div class="muted" style="margin-top:10px">目前沒有綁定</div>';
@@ -156,15 +199,26 @@ function build(M,W,pm,pw,n){
   var units=[];
   S.pairs.forEach(function(p){units.push({mem:p,m:p.filter(function(x){return M.indexOf(x)>=0}).length,w:p.filter(function(x){return W.indexOf(x)>=0}).length})});
   M.concat(W).forEach(function(x){if(!bound[x])units.push({mem:[x],m:M.indexOf(x)>=0?1:0,w:W.indexOf(x)>=0?1:0})});
+  if(S.noTeamGroups.some(function(g){return g.length>n}))return null;
+  var groupIds={};
+  S.noTeamGroups.forEach(function(g,i){g.forEach(function(x){(groupIds[x]||(groupIds[x]=[])).push(i)})});
+  var internalConflict=units.some(function(u){for(var i=0;i<u.mem.length;i++)for(var j=i+1;j<u.mem.length;j++){
+    var ids=groupIds[u.mem[i]]||[];if(ids.some(function(id){return(groupIds[u.mem[j]]||[]).indexOf(id)>=0}))return true;
+  }return false});
+  if(internalConflict)return null;
   var c=counts(),best=null,bs=1e9;
   for(var t=0;t<4000&&bs>0;t++){
-    var teams=[];for(var i=0;i<n;i++)teams.push({m:0,w:0,mem:[]});
+    var teams=[];for(var i=0;i<n;i++)teams.push({m:0,w:0,mem:[],usedGroups:{}});
     var ok=true;
-    shuffle(units).sort(function(a,b){return(b.m+b.w)-(a.m+a.w)}).forEach(function(u){
+    shuffle(units).sort(function(a,b){
+      function weight(u){return u.mem.length*2+u.mem.reduce(function(s,x){return s+(groupIds[x]||[]).length},0)}
+      return weight(b)-weight(a);
+    }).forEach(function(u){
       if(!ok)return;
-      var f=shuffle(teams).filter(function(x){return x.m+u.m<=pm&&x.w+u.w<=pw});
+      var f=shuffle(teams).filter(function(x){return x.m+u.m<=pm&&x.w+u.w<=pw&&!u.mem.some(function(name){return(groupIds[name]||[]).some(function(id){return x.usedGroups[id]})})});
       if(!f.length){ok=false;return}
       f[0].m+=u.m;f[0].w+=u.w;f[0].mem=f[0].mem.concat(u.mem);
+      u.mem.forEach(function(name){(groupIds[name]||[]).forEach(function(id){f[0].usedGroups[id]=true})});
     });
     if(!ok)continue;
     var s=0;
@@ -182,8 +236,12 @@ $("go").onclick=function(){
   if(M.some(function(x){return W.indexOf(x)>=0})){e.textContent="男生與女生名單有相同名字，請先改成能區分的名字。";return}
   var n=Math.floor(M.length/pm);
   if(n<2||M.length!==n*pm||W.length!==n*pw){e.textContent="人數不符：男生 "+M.length+" 人、女生 "+W.length+" 人，需剛好分成每隊 "+pm+" 男 "+pw+" 女。";return}
+  var all=M.concat(W);
+  if(S.noTeamGroups.some(function(g){return g.some(function(name){return all.indexOf(name)<0})})){e.textContent="有不可同隊組合中的成員已不在名單，請更新或移除該組。";$("excludeDetails").open=true;return}
+  if(S.noTeamGroups.some(function(g){return g.length>n})){e.textContent="不可同隊組合的人數不能多於隊伍數（目前 "+n+" 隊）。";$("excludeDetails").open=true;return}
+  if(S.pairs.some(function(p){return S.noTeamGroups.some(function(g){return p.every(function(name){return g.indexOf(name)>=0})})})){e.textContent="綁定同隊與不可同隊組合互相衝突，請調整條件。";$("excludeDetails").open=true;$("pairDetails").open=true;return}
   var t=build(M,W,pm,pw,n);
-  if(!t){e.textContent="綁定條件讓分隊無解，請減少綁定或調整人數。";return}
+  if(!t){e.textContent="目前的綁定、不可同隊或人數條件互相衝突，請調整後再試。";return}
   S.rounds.push(t);save();draw();$("latest").scrollIntoView({block:"start"});
 };
 $("clear").onclick=function(){if(S.rounds.length&&confirm("確定清除所有分隊紀錄？")){S.rounds=[];save();draw()}};
