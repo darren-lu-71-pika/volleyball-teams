@@ -113,7 +113,7 @@ button.secondary:hover{background:var(--soft)}
 
 <section class="section" aria-labelledby="settings-title">
   <div class="section-head"><div><div class="step">Step 02 · 設定</div><h2 id="settings-title">每隊人數</h2></div></div>
-  <div class="settings"><label class="setting" for="pm">男生 <input id="pm" type="number" min="1" max="5" step="1" value="3" inputmode="numeric"></label><label class="setting" for="pw">女生 <input id="pw" type="number" min="1" max="5" step="1" value="3" inputmode="numeric"></label></div>
+  <div class="settings"><label class="setting" for="pm">男生 <input id="pm" type="number" min="0" max="6" step="1" value="3" inputmode="numeric"></label><label class="setting" for="pw">女生 <input id="pw" type="number" min="0" max="6" step="1" value="3" inputmode="numeric"></label></div>
   <p class="muted settings-note">每隊 6 人；調整一欄時，另一欄會自動補足。人數需剛好分完，至少兩隊。</p>
   <details class="advanced" id="pairDetails"><summary>綁定同隊 <span class="muted" id="pairCount">0 組</span></summary>
     <p class="muted">需要固定同隊的人，可在這裡綁定。</p>
@@ -241,10 +241,10 @@ function build(M,W,pm,pw,n){
 $("go").onclick=function(){
   var M=list($("men").value),W=list($("women").value),pm=+$("pm").value,pw=+$("pw").value;
   var e=$("err");e.textContent="";
-  if(!Number.isInteger(pm)||!Number.isInteger(pw)||pm<1||pw<1||pm>5||pw>5||pm+pw!==6){e.textContent="每隊共 6 人，男生與女生都至少 1 人，請確認兩欄合計為 6。";return}
+  if(!Number.isInteger(pm)||!Number.isInteger(pw)||pm<0||pw<0||pm>6||pw>6||pm+pw!==6){e.textContent="每隊共 6 人，請設定 0 到 6 人，且男女合計為 6。";return}
   if(M.some(function(x){return W.indexOf(x)>=0})){e.textContent="男生與女生名單有相同名字，請先改成能區分的名字。";return}
-  var n=Math.floor(M.length/pm);
-  if(n<2||M.length!==n*pm||W.length!==n*pw){e.textContent="人數不符：男生 "+M.length+" 人、女生 "+W.length+" 人，需剛好分成每隊 "+pm+" 男 "+pw+" 女。";return}
+  var n=(M.length+W.length)/6;
+  if(!Number.isInteger(n)||n<2||M.length!==n*pm||W.length!==n*pw){e.textContent="人數不符：男生 "+M.length+" 人、女生 "+W.length+" 人，需剛好分成每隊 "+pm+" 男 "+pw+" 女。";return}
   var all=M.concat(W);
   if(S.noTeamGroups.some(function(g){return g.some(function(name){return all.indexOf(name)<0})})){e.textContent="有不可同隊組合中的成員已不在名單，請更新或移除該組。";$("excludeDetails").open=true;return}
   if(S.noTeamGroups.some(function(g){return g.length>n})){e.textContent="不可同隊組合的人數不能多於隊伍數（目前 "+n+" 隊）。";$("excludeDetails").open=true;return}
@@ -266,8 +266,9 @@ function updateRoster(){
   if(overlap.length)note+=' <span class="warning">⚠ 男女名單有 '+overlap.length+' 個同名，請區分</span>';
   if(repeated)note+=' <span class="warning">⚠ 重複輸入 '+repeated+' 筆，統計未重複計入</span>';
   $("rosterSummary").innerHTML="<strong>名單核對</strong>"+note;
-  var ready=Number.isInteger(pm)&&Number.isInteger(pw)&&pm>=1&&pw>=1&&pm<=5&&pw<=5&&pm+pw===6&&!overlap.length&&M.length>=pm*2&&M.length%pm===0&&W.length===M.length/pm*pw;
-  $("ready").textContent=ready?"可分成 "+(M.length/pm)+" 隊，每隊 "+pm+" 男 "+pw+" 女":"確認人數後開始分隊";
+  var total=M.length+W.length,teamCount=total/6;
+  var ready=Number.isInteger(pm)&&Number.isInteger(pw)&&pm>=0&&pw>=0&&pm<=6&&pw<=6&&pm+pw===6&&!overlap.length&&Number.isInteger(teamCount)&&teamCount>=2&&M.length===teamCount*pm&&W.length===teamCount*pw;
+  $("ready").textContent=ready?"可分成 "+teamCount+" 隊，每隊 "+pm+" 男 "+pw+" 女":"確認人數後開始分隊";
 }
 function roundHTML(rd,r,latest,Mset,bound){
   var html='<section class="section"'+(latest?' id="latest"':'')+'><div class="result-head"><div><div class="step">'+(latest?'最新結果':'分隊紀錄')+'</div><h2>第 '+(r+1)+' 輪 · '+rd.length+' 隊</h2></div>';
@@ -310,7 +311,7 @@ $("men").value=S.men;$("women").value=S.women;$("pm").value=S.pm;$("pw").value=S
 ["pm","pw"].forEach(function(id){$(id).oninput=function(){
   var value=+$(id).value,other=id==="pm"?"pw":"pm";
   S[id]=$(id).value===""?"":value;
-  if($(id).value!==""&&Number.isInteger(value)&&value>=1&&value<=5){$(other).value=6-value;S[other]=6-value}
+  if($(id).value!==""&&Number.isInteger(value)&&value>=0&&value<=6){$(other).value=6-value;S[other]=6-value}
   updateRoster();save();
 }});
 fillSel();updateRoster();draw();
